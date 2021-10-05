@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
   Image,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TouchableOpacity,
   FlatList,
   View,
   Dimensions,
 } from 'react-native';
-import {Line} from './Line';
+import {Separator} from './Separator';
+import TweetItem from './TweetItem';
+import * as RootNavigation from '../navigation/RootNavigation';
 
 const {height, width} = Dimensions.get('window');
 
@@ -50,31 +49,13 @@ const DATA = [
   },
 ];
 
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Image
-      style={styles.image}
-      source={{
-        uri: 'https://pbs.twimg.com/profile_images/1058467839370293248/OcHrsg9J_normal.jpg',
-      }}
-      resizeMode={'cover'}
-    />
-    <View style={styles.tweetinfo}>
-      <Text style={styles.text}>@Wizeline</Text>
-      <Text style={styles.title}>
-        Que se cayeron Facebook, Instagram y WhatsApp? Perdón, no me enteré
-        porque estaba leyendo Leyendas de Terror del maestro Carlos Trejo.
-      </Text>
-    </View>
-  </View>
-);
-
 const TweetList = () => {
   const renderItem = ({item}) => (
-    <>
-      <Item title={item.title} />
-      <Line></Line>
-    </>
+    <TouchableOpacity onPress={() => RootNavigation.navigate('Tweet')}>
+      <Separator>
+        <TweetItem title={item.title} />
+      </Separator>
+    </TouchableOpacity>
   );
 
   return (
@@ -104,15 +85,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 12,
   },
-  image: {
-    width: 50,
-    height: 50,
-    borderColor: 'black',
-    borderWidth: 2,
-    borderRadius: 75,
-  },
   tweetinfo: {
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     width: '85%',
   },
   text: {

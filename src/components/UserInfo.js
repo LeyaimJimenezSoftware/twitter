@@ -1,24 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Image,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import CircleImage from './CircleImage';
 
 const UserInfo = () => {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: 'https://pbs.twimg.com/profile_images/1058467839370293248/OcHrsg9J_normal.jpg',
-        }}
-        resizeMode={'cover'}
+      <CircleImage
+        url={
+          'https://pbs.twimg.com/profile_images/1058467839370293248/OcHrsg9J_normal.jpg'
+        }
       />
       <View style={{backgroundColor: 'red'}}>
         <Text style={styles.text}>Wizeline</Text>
@@ -34,13 +24,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkblue',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderColor: 'black',
-    borderWidth: 2,
-    borderRadius: 75,
   },
   text: {
     color: 'white',

@@ -6,12 +6,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Profile from '../screens/Profile';
 import TweetView from '../screens/TweetView';
+import { navigationRef } from './RootNavigation';
 
 const Stack = createNativeStackNavigator();
 
 function NavigationStack() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         <Stack.Screen
           options={{header: () => null}}
@@ -19,6 +20,7 @@ function NavigationStack() {
           component={Profile}
         />
          <Stack.Screen
+          options={{headerShadowVisible: false}}
           name="Tweet"
           component={TweetView}
         />
