@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import CircleImage from './CircleImage';
+import { CustomButton } from './CustomButton';
 
 const UserInfo = () => {
   return (
@@ -13,6 +14,7 @@ const UserInfo = () => {
       <View style={{backgroundColor: 'red'}}>
         <Text style={styles.text}>Wizeline</Text>
       </View>
+      <CustomButton name={'+'} action={()=>{}} />
     </View>
   );
 };
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkblue',
     justifyContent: 'center',
     alignItems: 'center',
+    height: 150
   },
   text: {
     color: 'white',
