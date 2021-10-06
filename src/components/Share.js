@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 
+
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 100 : 0;
 
 const ShareAndComment = () => {

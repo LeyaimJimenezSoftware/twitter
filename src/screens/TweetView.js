@@ -6,28 +6,34 @@ import {
 } from 'react-native';
 import CircleImage from '../components/CircleImage';
 import ShareAndComment from '../components/Share';
+import { Reactions } from '../components/Reactions';
 
-const TweetView = () => {
+const TweetView = ({route}) => {
+  const {item} = route.params;
+  const {text, user, favorite_count, retweet_count} = item;
+
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.userDataContainer}>
           <CircleImage
-            url={
-              'https://pbs.twimg.com/profile_images/1058467839370293248/OcHrsg9J_normal.jpg'
-            }
+            url={user?.profile_image_url_https}
           />
           <View style={styles.textInfo}>
-            <Text>Wizeline</Text>
-            <Text>@Wizeline</Text>
+            <Text>{user.screen_name}</Text>
+            <Text>{`@${user.screen_name}`}</Text>
           </View>
         </View>
 
         <View style={styles.textInfo}>
           <Text>
-            Que se cayeron Facebook, Instagram y WhatsApp? Perdón, no me enteré
-            porque estaba leyendo Leyendas de Terror del maestro Carlos Trejo.
+            {text}
           </Text>
+        </View>
+        <View style={styles.reactionContainer}>
+          <Reactions images={require('../images/msg.png')} count={0} />
+          <Reactions images={require('../images/reet.png')} count={retweet_count} />
+          <Reactions images={require('../images/heart.png')} count={favorite_count} />
         </View>
       </View>
 
@@ -51,6 +57,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginVertical: 10,
     justifyContent: 'center',
+  },
+  reactionContainer: {
+    flexDirection: 'row',
+    marginLeft: 20,
   },
 });
 

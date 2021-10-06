@@ -1,35 +1,15 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import response from './src/services/index';
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import NavigationStack from './src/navigation/NavigationStack';
+import {getUserData, getUserTweets} from './src/redux/actions/index';
 
 const App = () => {
-  useEffect(() => {
-    const user = async () => {
-      let result = await response.getUser();
-      let resultTweet = await response.getLastTweets();
-      console.log('res', result.data);
-      console.log('tweeet', resultTweet.data);
-    };
+  const dispatch = useDispatch();
 
-    user();
+  useEffect(() => {
+    dispatch(getUserData());
+    dispatch(getUserTweets())
   }, []);
 
   return (
@@ -42,22 +22,6 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 

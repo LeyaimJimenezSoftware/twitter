@@ -1,10 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 
-export const CustomButton = ({name, action, image}) => {
+export const CustomButton = ({name, action, image, width}) => {
   return (
     <TouchableOpacity
-      style={image ? styles.imageBtn : styles.button}
+      style={
+        image ? styles.imageBtn : [styles.button, {width: width ? width : 100}]
+      }
       onPress={() => {
         action();
       }}>
@@ -25,11 +27,11 @@ export const CustomButton = ({name, action, image}) => {
 const styles = StyleSheet.create({
   button: {
     marginVertical: 20,
+    marginHorizontal: 5,
     justifyContent: 'flex-end',
-    width: 100,
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10,
+    padding: 5,
     borderRadius: 100,
   },
   tinyLogo: {
@@ -41,5 +43,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 50,
     height: 50,
-  }
+  },
 });

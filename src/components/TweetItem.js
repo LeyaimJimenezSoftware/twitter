@@ -1,23 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import CircleImage from './CircleImage';
+import { Reactions } from './Reactions';
 
-const TweetItem = () => (
-  <View style={styles.item}>
-    <CircleImage
-      url={
-        'https://pbs.twimg.com/profile_images/1058467839370293248/OcHrsg9J_normal.jpg'
-      }
-    />
-    <View style={styles.tweetinfo}>
-      <Text style={styles.text}>@Wizeline</Text>
-      <Text style={styles.title}>
-        Que se cayeron Facebook, Instagram y WhatsApp? Perdón, no me enteré
-        porque estaba leyendo Leyendas de Terror del maestro Carlos Trejo.
-      </Text>
+const TweetItem = ({item}) => {
+  const {text, user, favorite_count, retweet_count} = item;
+  return (
+    <View style={styles.item}>
+      <CircleImage url={user?.profile_image_url_https} />
+      <View style={styles.tweetinfo}>
+        <Text style={styles.text}>{`@${user.screen_name}`}</Text>
+        <Text style={styles.title}>{text}</Text>
+        <View style={styles.reactionContainer}>
+          <Reactions images={require('../images/msg.png')} count={0} />
+          <Reactions images={require('../images/reet.png')} count={retweet_count ? retweet_count : 0} />
+          <Reactions images={require('../images/heart.png')} count={favorite_count ? favorite_count : 0} />
+        </View>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default TweetItem;
 
@@ -38,5 +40,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'gray',
+  },
+  reactionContainer: {
+    flexDirection: 'row',
   },
 });

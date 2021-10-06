@@ -1,34 +1,25 @@
-import React, {useState} from 'react';
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-} from 'react-native';
+import React from 'react';
+import {Modal, StyleSheet, Text, View, TextInput} from 'react-native';
+import {useDispatch} from 'react-redux';
 import CircleImage from './CircleImage';
 import {CustomButton} from './CustomButton';
 import {useData} from '../Hooks/useData';
+import {postTweetAction} from '../redux/actions/index';
 
-const CreateTweet = () => {
-  const [modalVisible, setModalVisible] = useState(true);
-  const [formValues, handleFormValueChange] = useData({
-    tweet: 'teew',
+const CreateTweet = ({createTweet, openCreateTweet}) => {
+  const dispatch = useDispatch();
+  const [formValues, handleFormValueChange, setFormValues] = useData({
+    tweet: '',
   });
 
-  console.log('formValues.tweet', formValues.tweet);
-  const setModal = () => {
-    setModalVisible(false);
-  };
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
+      visible={createTweet}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        setModalVisible(!modalVisible);
+        openCreateTweet(false);
+        setFormValues({tweet: ''})
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -42,7 +33,11 @@ const CreateTweet = () => {
               image={
                 'https://icon-library.com/images/x-button-icon/x-button-icon-20.jpg'
               }
-              action={setModal}
+              action={() => {
+                openCreateTweet(false)
+                setFormValues({tweet: ''})
+              }
+              }
             />
           </View>
           <View style={styles.textContainer}>
@@ -54,7 +49,7 @@ const CreateTweet = () => {
               }
               multiline={true}
               style={styles.textInputComment}
-              placeholder={'Tweet your reply'}
+              placeholder={'Tweet'}
               maxLength={140}
             />
           </View>
@@ -63,7 +58,10 @@ const CreateTweet = () => {
               <Text>{`${formValues.tweet.length}/140`}</Text>
             </View>
             <View style={styles.btnPos}>
-              <CustomButton name={'Tweet'} />
+              <CustomButton
+                name={'Tweet'}
+                action={() => dispatch(postTweetAction(formValues.tweet))}
+              />
             </View>
           </View>
         </View>

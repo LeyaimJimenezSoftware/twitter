@@ -1,67 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
-  Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   FlatList,
   View,
-  Dimensions,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import {Separator} from './Separator';
 import TweetItem from './TweetItem';
 import * as RootNavigation from '../navigation/RootNavigation';
 
-const {height, width} = Dimensions.get('window');
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
 const TweetList = () => {
-  const renderItem = ({item}) => (
-    <TouchableOpacity onPress={() => RootNavigation.navigate('Tweet')}>
-      <Separator>
-        <TweetItem title={item.title} />
-      </Separator>
-    </TouchableOpacity>
-  );
+  const {tweets} = useSelector(state => state?.twitterReducer);
+
+  const renderItem = ({item}) => {
+    return (
+      <TouchableOpacity onPress={() => RootNavigation.navigate('Tweet',  {
+        item,
+      })}>
+        <Separator>
+          <TweetItem item={item} />
+        </Separator>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={DATA}
+        data={tweets}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
