@@ -5,6 +5,11 @@ export const addUser = user => ({
   payload: user,
 });
 
+export const setError = value => ({
+    type: 'SET_ERROR',
+    payload: value,
+  });
+
 export const getUserData = () => {
   return async dispatch => {
     try {
@@ -37,6 +42,11 @@ export const tweetSuccess = data => ({
   payload: data,
 });
 
+export const openCreateModal = data => ({
+    type: 'OPEN_MODAL',
+    payload: data,
+  });
+
 export const postTweetAction = value => {
   return async dispatch => {
     try {
@@ -47,6 +57,7 @@ export const postTweetAction = value => {
       }
     } catch (err) {
       console.log('error', err);
+      dispatch(setError(true))
     }
   };
 };
@@ -60,12 +71,10 @@ export const searchTweet = query => {
     return async dispatch => {
       try {
         const res = await data.searchTweet(query);
-        // if (res.status === 201) {
-        //   dispatch(getUserTweets());
-        //   dispatch(tweetSuccess(true));
-        // }
+        dispatch(searchResult(res.data));
       } catch (err) {
         console.log('error', err);
+        dispatch(searchResult(null));
       }
     };
   };

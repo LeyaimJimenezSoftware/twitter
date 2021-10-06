@@ -3,6 +3,8 @@ const initialState = {
     tweets: null,
     tweeetSuccess: false,
     searchResult: null,
+    createModal: false,
+    error: false,
   };
   
   const twitterReducer = (state = initialState, action) => {
@@ -29,6 +31,18 @@ const initialState = {
         return {
           ...state,
           searchResult: action.payload
+        }
+      }
+      case 'OPEN_MODAL': {
+        return {
+          ...state,
+          createModal: action.payload
+        }
+      }
+      case 'SET_ERROR': {
+        return {
+          ...state,
+          error: action.payload
         }
       }
       default: {

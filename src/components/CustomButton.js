@@ -12,10 +12,9 @@ export const CustomButton = ({name, action, image, width}) => {
       }}>
       {image ? (
         <Image
+          resizeMode="contain"
           style={styles.tinyLogo}
-          source={{
-            uri: image,
-          }}
+          source={image}
         />
       ) : (
         <Text>{name}</Text>
@@ -35,8 +34,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   tinyLogo: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
   },
   imageBtn: {
     alignItems: 'center',

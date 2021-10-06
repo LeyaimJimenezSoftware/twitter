@@ -1,25 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Modal, StyleSheet, Text, View, TextInput} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import CircleImage from './CircleImage';
 import {CustomButton} from './CustomButton';
 import {useData} from '../Hooks/useData';
-import {postTweetAction} from '../redux/actions/index';
+import {postTweetAction, openCreateModal} from '../redux/actions/index';
 
-const CreateTweet = ({createTweet, openCreateTweet}) => {
+const CreateTweet = () => {
+  const {createModal} = useSelector(state => state?.twitterReducer);
   const dispatch = useDispatch();
   const [formValues, handleFormValueChange, setFormValues] = useData({
     tweet: '',
   });
 
+  useEffect(() => {
+    setFormValues({tweet: ''});
+  }, [createModal]);
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={createTweet}
+      visible={createModal}
       onRequestClose={() => {
-        openCreateTweet(false);
-        setFormValues({tweet: ''})
+        dispatch(openCreateModal(false))
+        setFormValues({tweet: ''});
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -30,14 +35,11 @@ const CreateTweet = ({createTweet, openCreateTweet}) => {
               }
             />
             <CustomButton
-              image={
-                'https://icon-library.com/images/x-button-icon/x-button-icon-20.jpg'
-              }
+              image={require('../images/x-button.jpeg')}
               action={() => {
-                openCreateTweet(false)
-                setFormValues({tweet: ''})
-              }
-              }
+                dispatch(openCreateModal(false))
+                setFormValues({tweet: ''});
+              }}
             />
           </View>
           <View style={styles.textContainer}>
@@ -60,6 +62,7 @@ const CreateTweet = ({createTweet, openCreateTweet}) => {
             <View style={styles.btnPos}>
               <CustomButton
                 name={'Tweet'}
+                disabled={formValues.tweet.length >= 1}
                 action={() => dispatch(postTweetAction(formValues.tweet))}
               />
             </View>

@@ -10,9 +10,7 @@ import {Separator} from './Separator';
 import TweetItem from './TweetItem';
 import * as RootNavigation from '../navigation/RootNavigation';
 
-const TweetList = () => {
-  const {tweets} = useSelector(state => state?.twitterReducer);
-
+const TweetList = ({tweets}) => {
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => RootNavigation.navigate('Tweet',  {

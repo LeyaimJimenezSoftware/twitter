@@ -22,9 +22,9 @@ export default {
       },
     );
   },
-  postTweet: async query => {
-    return axios.post(
-     `https://fake-twitter-api-w5dmexv5jq-uc.a.run.app/api/search${query}`,
+  searchTweet: async query => {
+    return axios.get(
+     `https://fake-twitter-api-w5dmexv5jq-uc.a.run.app/api/search/${query}`,
     );
   },
 };

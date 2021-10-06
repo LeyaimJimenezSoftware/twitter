@@ -25,7 +25,7 @@ const TweetView = ({route}) => {
           </View>
         </View>
 
-        <View style={styles.textInfo}>
+        <View style={styles.textContainer}>
           <Text>
             {text}
           </Text>
@@ -54,13 +54,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   textInfo: {
-    marginLeft: 20,
+    marginLeft: 10,
     marginVertical: 10,
     justifyContent: 'center',
   },
   reactionContainer: {
     flexDirection: 'row',
     marginLeft: 20,
+  },
+  textContainer: {
+    marginLeft: 20,
+    marginVertical: 10,
   },
 });
 

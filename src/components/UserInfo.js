@@ -1,49 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
 import CircleImage from './CircleImage';
 import {CustomButton} from './CustomButton';
-import CreateTweet from './CreateTweet';
-import {tweetSuccess} from '../redux/actions/index';
+import {openCreateModal} from '../redux/actions/index';
 import * as RootNavigation from '../navigation/RootNavigation';
 
 const UserInfo = () => {
-  const [createTweet, setCreateTweet] = useState(false);
   const dispatch = useDispatch();
   const {
-    tweeetSuccess,
     user: {
       profile_image_url_https,
       profile_background_image_url_https,
       description,
       screen_name,
-      profile_background_color,
     },
   } = useSelector(state => state?.twitterReducer);
 
-  const openCreateTweet = value => {
-    setCreateTweet(value);
-  };
-
-  useEffect(() => {
-    if (tweeetSuccess) {
-      openCreateTweet(false);
-      dispatch(tweetSuccess(false));
-      showMessage({
-        message: 'Success',
-        description: 'Tweet created',
-        type: 'success',
-      });
-    }
-  }, [tweeetSuccess]);
-
   return (
     <ImageBackground
-      source={{uri: profile_background_image_url_https}}
+      source={{
+        uri: profile_background_image_url_https
+          ? profile_background_image_url_https
+          : 'https://cdn.wizeline.com/uploads/2019/05/Wizeline-Guadalajara-terrace.png',
+      }}
       imageStyle={{opacity: 0.5}}
       resizeMode="cover"
-      style={[styles.container, {backgroundColor: 'red'}]}>
+      style={[styles.container, {backgroundColor: 'black'}]}>
       <CircleImage url={profile_image_url_https} />
       <Text style={styles.text}>{screen_name}</Text>
       <Text style={styles.text}>{description}</Text>
@@ -56,16 +39,12 @@ const UserInfo = () => {
           />
           <CustomButton
             name={'+'}
-            action={() => openCreateTweet(true)}
+            action={() => dispatch(openCreateModal(true))}
             width={50}
           />
         </View>
         <CustomButton name={'Setting'} action={() => {}} width={70} />
       </View>
-      <CreateTweet
-        createTweet={createTweet}
-        openCreateTweet={openCreateTweet}
-      />
     </ImageBackground>
   );
 };
